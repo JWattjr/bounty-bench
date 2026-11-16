@@ -125,7 +125,7 @@ export default function Bench({ proof }: { proof: Proof }) {
       <section className="panel ledger-panel">
         <div className="panel-heading"><div><h2>Bounty queue</h2><p>Frozen criteria, ordered claims, finalized outcomes.</p></div><button className="icon-button" aria-label="Refresh board" onClick={() => void refresh()}><Activity size={16} /></button></div>
         <div className="filter-row">{["ALL", "OPEN", "CLOSED"].map((value) => <button key={value} className={filter === value ? "filter-active" : ""} onClick={() => setFilter(value)}>{value === "ALL" ? "All bounties" : value === "OPEN" ? "Open" : "Resolved"}<span>{value === "ALL" ? bounties.length : bounties.filter((item) => value === "OPEN" ? item.status === "OPEN" : item.status !== "OPEN").length}</span></button>)}</div>
-        {loadError && <div className="inline-error"><strong>Live read unavailable.</strong><span>{loadError}</span><button onClick={() => void refresh()}>Retry</button></div>}
+        {loadError && <div className="inline-error"><strong>{snapshot?.stale && snapshot.bounties.length ? "Showing last good live read." : "Live read unavailable, showing recorded proof."}</strong><span>{loadError}</span><button onClick={() => void refresh()}>Retry</button></div>}
         {!snapshot && !loadError && <div className="empty-line">Reading finalized StudioNet state…</div>}
         {snapshot && visible.length === 0 && !loadError && <div className="empty-ledger"><GitBranch size={20} /><strong>No bounties in this view.</strong><span>Create the first one with a concrete diff-observable criterion.</span></div>}
         {visible.length > 0 && <div className="ledger-table">

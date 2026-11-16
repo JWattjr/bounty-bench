@@ -101,7 +101,7 @@ export default function BountyDetail({ bountyId, proof }: { bountyId: string; pr
   }, []);
 
   if (!snapshot && !loadError) return <main className="shell"><div className="loading-state">Reading the finalized StudioNet board…</div></main>;
-  if (!bounty) return <main className="shell"><header className="topbar"><Link className="brand-lockup" href="/"><span className="brand-mark">BB</span><span>Bounty Bench</span></Link><span className="network-chip"><i /> StudioNet <b>61999</b></span></header><section className="not-found panel"><h1>{loadError ? "Live read unavailable" : "Bounty not found"}</h1><p>{loadError || `No finalized bounty with id ${bountyId} was returned by the Board.`}</p><Link className="text-link" href="/"><ArrowLeft size={14} /> Back to board</Link></section></main>;
+  if (!bounty) return <main className="shell"><header className="topbar"><Link className="brand-lockup" href="/"><span className="brand-mark">BB</span><span>Bounty Bench</span></Link><span className="network-chip"><i /> StudioNet <b>61999</b></span></header><section className="not-found panel"><h1>{loadError ? "Live read unavailable, showing recorded proof" : "Bounty not found"}</h1><p>{loadError ? "StudioNet did not return this case right now. The recorded proof for every case is on the home page, and the live case will return when the read succeeds." : `No finalized bounty with id ${bountyId} was returned by the Board.`}</p><Link className="text-link" href="/"><ArrowLeft size={14} /> Back to board</Link></section></main>;
 
   return <main className="shell">
     <header className="topbar">

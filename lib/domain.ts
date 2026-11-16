@@ -61,6 +61,8 @@ export type Snapshot = {
   network: "StudioNet";
   chainId: 61999;
   error?: string;
+  stale?: boolean;
+  staleSince?: string;
 };
 
 export type Proof = {
