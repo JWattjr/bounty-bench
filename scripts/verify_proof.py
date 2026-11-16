@@ -15,11 +15,16 @@ RPC = "https://studio.genlayer.com/api"
 EXPLORER = "https://explorer-studio.genlayer.com"
 HEADERS = {"User-Agent": "Mozilla/5.0 BountyBench/1.0", "Accept": "application/json"}
 LAST_REQUEST = 0.0
+MAX_ATTEMPTS = 8
+
+
+def retry_delay(attempt):
+    return min(5 * (attempt + 1), 30)
 
 
 def get_json(url):
     global LAST_REQUEST
-    for attempt in range(5):
+    for attempt in range(MAX_ATTEMPTS):
         wait = 2.1 - (time.monotonic() - LAST_REQUEST)
         if wait > 0:
             time.sleep(wait)
@@ -27,15 +32,15 @@ def get_json(url):
             response = requests.get(url, headers=HEADERS, timeout=45)
         except requests.exceptions.RequestException:
             LAST_REQUEST = time.monotonic()
-            if attempt == 4:
+            if attempt == MAX_ATTEMPTS - 1:
                 raise
             print("Transient Explorer read timeout; retrying", flush=True)
-            time.sleep(3 * (attempt + 1))
+            time.sleep(retry_delay(attempt))
             continue
         LAST_REQUEST = time.monotonic()
-        if response.status_code in (429, 502, 503, 504) and attempt < 4:
+        if response.status_code in (429, 500, 502, 503, 504) and attempt < MAX_ATTEMPTS - 1:
             print("Transient Explorer read failure; retrying", flush=True)
-            time.sleep(3 * (attempt + 1))
+            time.sleep(retry_delay(attempt))
             continue
         response.raise_for_status()
         return response.json()
@@ -44,7 +49,7 @@ def get_json(url):
 
 def get_page(url):
     global LAST_REQUEST
-    for attempt in range(5):
+    for attempt in range(MAX_ATTEMPTS):
         wait = 2.1 - (time.monotonic() - LAST_REQUEST)
         if wait > 0:
             time.sleep(wait)
@@ -52,15 +57,15 @@ def get_page(url):
             response = requests.get(url, headers=HEADERS, timeout=45)
         except requests.exceptions.RequestException:
             LAST_REQUEST = time.monotonic()
-            if attempt == 4:
+            if attempt == MAX_ATTEMPTS - 1:
                 raise
             print("Transient Explorer page timeout; retrying", flush=True)
-            time.sleep(3 * (attempt + 1))
+            time.sleep(retry_delay(attempt))
             continue
         LAST_REQUEST = time.monotonic()
-        if response.status_code in (429, 502, 503, 504) and attempt < 4:
+        if response.status_code in (429, 500, 502, 503, 504) and attempt < MAX_ATTEMPTS - 1:
             print("Transient Explorer page failure; retrying", flush=True)
-            time.sleep(3 * (attempt + 1))
+            time.sleep(retry_delay(attempt))
             continue
         response.raise_for_status()
         return response
@@ -69,7 +74,7 @@ def get_page(url):
 
 def rpc(method, params):
     global LAST_REQUEST
-    for attempt in range(5):
+    for attempt in range(MAX_ATTEMPTS):
         wait = 2.1 - (time.monotonic() - LAST_REQUEST)
         if wait > 0:
             time.sleep(wait)
@@ -82,15 +87,15 @@ def rpc(method, params):
             )
         except requests.exceptions.RequestException:
             LAST_REQUEST = time.monotonic()
-            if attempt == 4:
+            if attempt == MAX_ATTEMPTS - 1:
                 raise
             print("Transient StudioNet RPC read timeout; retrying", flush=True)
-            time.sleep(3 * (attempt + 1))
+            time.sleep(retry_delay(attempt))
             continue
         LAST_REQUEST = time.monotonic()
-        if response.status_code in (429, 502, 503, 504) and attempt < 4:
+        if response.status_code in (429, 500, 502, 503, 504) and attempt < MAX_ATTEMPTS - 1:
             print("Transient StudioNet RPC response; retrying", flush=True)
-            time.sleep(3 * (attempt + 1))
+            time.sleep(retry_delay(attempt))
             continue
         response.raise_for_status()
         body = response.json()
