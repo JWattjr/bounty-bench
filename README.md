@@ -9,11 +9,14 @@ Bounty Bench lets a funder escrow GEN against a GitHub repository and up to four
 - Network: GenLayer StudioNet, chain ID `61999`.
 - Current BountyBoard: [`0x076C7cd3a79b8991Ce3Bc3B005214d13A1e5E4D5`](https://explorer-studio.genlayer.com/address/0x076C7cd3a79b8991Ce3Bc3B005214d13A1e5E4D5)
 - Current PatchJudge: [`0x739D4947Ecfa7622A79aeBBb91FFA57Ca9dFB898`](https://explorer-studio.genlayer.com/address/0x739D4947Ecfa7622A79aeBBb91FFA57Ca9dFB898)
-- Retired v1 contracts: [BountyBoard](https://explorer-studio.genlayer.com/address/0x2A8a659fEF6E59Bca72BB8e73680AcBA119FFE83) · [PatchJudge](https://explorer-studio.genlayer.com/address/0xF180Fc0c5bCBCFE94C18707bA56764D0fC0cbd62)
-- Retired v2 contracts: [BountyBoard](https://explorer-studio.genlayer.com/address/0xE5be47C64db6ec6A0dd1EF055F47F31FfAC96930) · [PatchJudge](https://explorer-studio.genlayer.com/address/0x290e65B2533DC5da2CeC5f3c81428dBaA4051AAF)
-- Probe deployments: [AccessProbe](https://explorer-studio.genlayer.com/address/0xC18085B2a08eC2d1d73238da3A5E53211E60f79a) · [AccessProbeV2](https://explorer-studio.genlayer.com/address/0x6B149DCfBe20c20e411758e6eE7F49372b2e3fa0)
 - Public fixture repository: [JWattjr/bounty-bench-fixtures](https://github.com/JWattjr/bounty-bench-fixtures)
 - Live app: [bounty-bench.vercel.app](https://bounty-bench.vercel.app); the final deployment URL is also recorded in [`deploy/proof.json`](deploy/proof.json).
+
+## Release history
+
+- **v1** — [BountyBoard](https://explorer-studio.genlayer.com/address/0x2A8a659fEF6E59Bca72BB8e73680AcBA119FFE83) · [PatchJudge](https://explorer-studio.genlayer.com/address/0xF180Fc0c5bCBCFE94C18707bA56764D0fC0cbd62). Hunter D’s third-criterion PatchJudge child ended `CANCELED / NO_MAJORITY`; the immutable Board could not reset the stale `JUDGING` claim, so v1 was archived.
+- **v2** — [BountyBoard](https://explorer-studio.genlayer.com/address/0xE5be47C64db6ec6A0dd1EF055F47F31FfAC96930) · [PatchJudge](https://explorer-studio.genlayer.com/address/0x290e65B2533DC5da2CeC5f3c81428dBaA4051AAF). The model returned `LLM_ERROR` for the regression-test criterion; the Board refunded D’s bond and left the main bounty without a winner, so v3 replaced this attempt.
+- **GitHub access probes** — [AccessProbe](https://explorer-studio.genlayer.com/address/0xC18085B2a08eC2d1d73238da3A5E53211E60f79a) · [AccessProbeV2](https://explorer-studio.genlayer.com/address/0x6B149DCfBe20c20e411758e6eE7F49372b2e3fa0). The large patch did not produce a validator-stable digest, and oversized diffs exceeded 30 KB; v3 retained GitHub but judged bounded extracts with validator-stable quote and digest checks.
 
 `deploy/proof.json` records active and retired contract source hashes, every transaction hash including nested callbacks, and the observed result for each release. `npm run verify:proof` checks each direct StudioNet Explorer address page, contract API record, RPC chain ID, and transaction status. Proof snapshots are labeled separately from current reads in the app. The Portal fields are prepared for the owner and have not been submitted.
 
