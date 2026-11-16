@@ -19,32 +19,85 @@ LAST_REQUEST = 0.0
 
 def get_json(url):
     global LAST_REQUEST
-    wait = 2.1 - (time.monotonic() - LAST_REQUEST)
-    if wait > 0:
-        time.sleep(wait)
-    response = requests.get(url, headers=HEADERS, timeout=45)
-    LAST_REQUEST = time.monotonic()
-    response.raise_for_status()
-    return response.json()
+    for attempt in range(5):
+        wait = 2.1 - (time.monotonic() - LAST_REQUEST)
+        if wait > 0:
+            time.sleep(wait)
+        try:
+            response = requests.get(url, headers=HEADERS, timeout=45)
+        except requests.exceptions.RequestException:
+            LAST_REQUEST = time.monotonic()
+            if attempt == 4:
+                raise
+            print("Transient Explorer read timeout; retrying", flush=True)
+            time.sleep(3 * (attempt + 1))
+            continue
+        LAST_REQUEST = time.monotonic()
+        if response.status_code in (429, 502, 503, 504) and attempt < 4:
+            print("Transient Explorer read failure; retrying", flush=True)
+            time.sleep(3 * (attempt + 1))
+            continue
+        response.raise_for_status()
+        return response.json()
+    raise RuntimeError("Explorer read retries exhausted")
+
+
+def get_page(url):
+    global LAST_REQUEST
+    for attempt in range(5):
+        wait = 2.1 - (time.monotonic() - LAST_REQUEST)
+        if wait > 0:
+            time.sleep(wait)
+        try:
+            response = requests.get(url, headers=HEADERS, timeout=45)
+        except requests.exceptions.RequestException:
+            LAST_REQUEST = time.monotonic()
+            if attempt == 4:
+                raise
+            print("Transient Explorer page timeout; retrying", flush=True)
+            time.sleep(3 * (attempt + 1))
+            continue
+        LAST_REQUEST = time.monotonic()
+        if response.status_code in (429, 502, 503, 504) and attempt < 4:
+            print("Transient Explorer page failure; retrying", flush=True)
+            time.sleep(3 * (attempt + 1))
+            continue
+        response.raise_for_status()
+        return response
+    raise RuntimeError("Explorer page retries exhausted")
 
 
 def rpc(method, params):
     global LAST_REQUEST
-    wait = 2.1 - (time.monotonic() - LAST_REQUEST)
-    if wait > 0:
-        time.sleep(wait)
-    response = requests.post(
-        RPC,
-        json={"jsonrpc": "2.0", "id": 1, "method": method, "params": params},
-        headers=HEADERS,
-        timeout=45,
-    )
-    LAST_REQUEST = time.monotonic()
-    response.raise_for_status()
-    body = response.json()
-    if body.get("error"):
-        raise RuntimeError(method + ": " + str(body["error"]))
-    return body.get("result")
+    for attempt in range(5):
+        wait = 2.1 - (time.monotonic() - LAST_REQUEST)
+        if wait > 0:
+            time.sleep(wait)
+        try:
+            response = requests.post(
+                RPC,
+                json={"jsonrpc": "2.0", "id": 1, "method": method, "params": params},
+                headers=HEADERS,
+                timeout=45,
+            )
+        except requests.exceptions.RequestException:
+            LAST_REQUEST = time.monotonic()
+            if attempt == 4:
+                raise
+            print("Transient StudioNet RPC read timeout; retrying", flush=True)
+            time.sleep(3 * (attempt + 1))
+            continue
+        LAST_REQUEST = time.monotonic()
+        if response.status_code in (429, 502, 503, 504) and attempt < 4:
+            print("Transient StudioNet RPC response; retrying", flush=True)
+            time.sleep(3 * (attempt + 1))
+            continue
+        response.raise_for_status()
+        body = response.json()
+        if body.get("error"):
+            raise RuntimeError(method + ": " + str(body["error"]))
+        return body.get("result")
+    raise RuntimeError(method + " RPC retries exhausted")
 
 
 def nested_address_objects(value):
@@ -74,8 +127,7 @@ def verify_contracts():
         if not matches or not any(item.get("type") == "CONTRACT" for item in matches):
             raise RuntimeError(name + " Explorer address endpoint did not return this address as type CONTRACT")
         page_url = EXPLORER + "/address/" + address
-        page = requests.get(page_url, headers=HEADERS, timeout=45)
-        page.raise_for_status()
+        page = get_page(page_url)
         if urlparse(page.url).hostname != "explorer-studio.genlayer.com" or address.lower() not in page.url.lower():
             raise RuntimeError(name + " direct Explorer link did not resolve to this StudioNet address")
         print("CONTRACT", name, address, "direct StudioNet Explorer link and type CONTRACT verified", flush=True)

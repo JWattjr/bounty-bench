@@ -291,7 +291,17 @@ def deploy_contracts():
             raise RuntimeError(name + " deployment finalized without a contract address")
         PROOF["contracts"][name] = {"address": deployed_address, "source": filename, "sha256": source_sha}
         save()
-    tx(PROOF, "configure-patch-judge", address("BountyBoard"), "set_patch_judge", [address("PatchJudge")])
+    if "configure-patch-judge" in PROOF["transactions"]:
+        tx(PROOF, "configure-patch-judge", address("BountyBoard"), "set_patch_judge", [address("PatchJudge")])
+    elif PROOF.get("releaseStatus") in (
+        "CONTRACTS_DEPLOYED",
+        "LIVE_MAIN_COMPLETE_TIMEOUT_PENDING",
+        "LIVE_CASES_COMPLETE",
+        "LIVE_TIMEOUT_COMPLETE_MAIN_PENDING",
+    ):
+        print("PatchJudge is already configured on this recorded deployment", flush=True)
+    else:
+        tx(PROOF, "configure-patch-judge", address("BountyBoard"), "set_patch_judge", [address("PatchJudge")])
     PROOF["releaseStatus"] = "CONTRACTS_DEPLOYED"
     save()
 

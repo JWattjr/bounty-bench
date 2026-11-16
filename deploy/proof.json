@@ -2,7 +2,7 @@
   "network": "StudioNet",
   "chainId": 61999,
   "explorer": "https://explorer-studio.genlayer.com",
-  "releaseStatus": "LIVE_MAIN_COMPLETE_TIMEOUT_PENDING",
+  "releaseStatus": "LIVE_CASES_COMPLETE",
   "approvedTotalWei": 1000,
   "contracts": {
     "AccessProbe": {
@@ -115,7 +115,11 @@
     "close-v2-timeout": "0x0235748936761e0ef2fbe428ae5277f78b7e01bb70cebd4808e611b6bdbe403b",
     "close-v2-timeout-child-0": "0x0f2a87ddac37ac36d1ebdc74ded539134b7e47c267e087220df2209fb0c934fd",
     "close-v2-timeout-child-0-child-0": "0x0273bab74f8d8a2cfdbfacf9c4098db602baba623851397013906ad580aeb55f",
-    "record-board-close-v2-timeout": "0xebe20bcfa8aecafd5b8a52d7eb1c55507b9beac593bedee1fca7ee50984c4080"
+    "record-board-close-v2-timeout": "0xebe20bcfa8aecafd5b8a52d7eb1c55507b9beac593bedee1fca7ee50984c4080",
+    "close-timeout": "0x3177e0b8127f561d6a8c96ea45f5b774ba9106ad79380ba44e07743b4bee6e8a",
+    "close-timeout-child-0": "0xebe9fa36b53cb095e337a2fddbb99bd99be7be7f17917e483373e4ec458585ac",
+    "close-timeout-child-0-child-0": "0xa86818c73f6b55c3203ef14db61a500cb0ef2f8147a1324e1832a2320ab71c93",
+    "record-board-close-timeout": "0xef392f585dafb69995e76b8b1059b8cea845ecb7f5f421d073030464548fe347"
   },
   "deposits": {
     "create-rejected": 15,
@@ -155,8 +159,9 @@
       "claimBondWei": 5,
       "rewardWei": 20,
       "createdStatus": "OPEN",
-      "finalStatus": "WAITING_FOR_DEADLINE_GRACE",
-      "eligibleAt": 1794796459
+      "finalStatus": "CLOSED",
+      "eligibleAt": 1794796459,
+      "closedAt": 1794796523
     },
     "main": {
       "bountyId": "bounty-3",
@@ -486,8 +491,8 @@
       "status": 200
     }
   },
-  "sourceCommit": null,
-  "appUrl": null,
+  "sourceCommit": "78932e556b7031ff1173c9cd3ff6aad6a50111cd",
+  "appUrl": "https://bounty-bench.vercel.app",
   "fixturesRepo": "https://github.com/JWattjr/bounty-bench-fixtures",
   "releases": {
     "v1": {

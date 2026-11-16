@@ -25,7 +25,7 @@ Bounty Bench is an open code-bounty board built with two GenLayer Intelligent Co
 
 ## Expected outcome
 
-The main bounty settles to Hunter D after A fails the deterministic claimant-trailer check, B fails the required regression-test criterion, and C fails the behavior criterion despite containing an instruction-like comment. Hunter E’s pending bond is refunded. The rejected vague-spec bounty is refunded to the funder, and the no-claim timeout bounty closes after its deadline plus 30-minute grace period and returns its reward. All transfers and cross-contract callbacks are finalized on StudioNet.
+The final v3 main bounty settles to Hunter D after A fails the deterministic claimant-trailer check, B fails the required regression-test criterion, and C fails the behavior criterion despite containing an instruction-like comment. Hunter E’s pending bond is refunded. The rejected vague-spec bounty is refunded to the funder, and the 20 wei no-claim timeout bounty has closed after its deadline plus 30-minute grace period and returned its reward. The v3 payouts and cross-contract callbacks are finalized on StudioNet. Earlier v1/v2 attempts are archived separately; v1 includes one explicitly recorded canceled PatchJudge child after `NO_MAJORITY`, and v2 records the LLM insufficient-evidence fallback. Their main bounties remain closeable after the recorded deadlines plus grace, using `python scripts/release.py close-legacy`.
 
 ## Evidence entries
 

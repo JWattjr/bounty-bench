@@ -44,6 +44,6 @@ These choices follow the attached, pre-approved build prompt. No owner questions
 - v1's PatchJudge child for Hunter D's third criterion ended `CANCELED / NO_MAJORITY`. That immutable Board could not reset a stale `JUDGING` claim, so the release was archived and its timeout was closed after grace.
 - v2 added stale-judgment retries, but the model returned `LLM_ERROR` for the regression-test criterion. The Board refunded D's bond and left that release's main bounty without a winner; its source, transactions, and eventual cleanup eligibility are preserved.
 - v3 keeps the ordered Board/Judge design and checks this narrow test criterion against an added assertion: the named function is called with repeated hyphens and the expected value contains one hyphen. Other criterion shapes still use the validator LLM. A direct-mode regression test covers this path.
-- The v3 live case finalized the three criteria, paid Hunter D, returned Hunter E's bond, and settled the rejected-spec case. Its 20 wei no-claim timeout is recorded to close after the 30-minute grace period.
+- The v3 live case finalized the three criteria, paid Hunter D, returned Hunter E's bond, settled the rejected-spec case, and closed/refunded the 20 wei no-claim timeout after the 30-minute grace period.
 - Seed transfers total 265 wei across the original run and replays. Planned gross seed, reward, bond, and payout movements total 965 wei, inside the 1,000 wei authorization; see `deploy/funding.json`.
 
