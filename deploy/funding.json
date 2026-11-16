@@ -1,0 +1,155 @@
+{
+  "network": "StudioNet",
+  "chainId": 61999,
+  "sourceAccount": "moment-grid-studionet",
+  "sourceAddress": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+  "approvedTotalWei": 1000,
+  "plannedTransfersWei": 265,
+  "caseValuesWei": {
+    "rejectedSpecReward": 15,
+    "mainReward": 50,
+    "timeoutReward": 20,
+    "claimBond": 5,
+    "mainClaimCount": 5
+  },
+  "transfers": {
+    "funder": {
+      "to": "0x1E2642D48f91d7a3Cb9dd9dc12969db77aD79A5b",
+      "wei": 85,
+      "transactionHash": "0x1112b9f4b91ff295dfce12546fb0e72e95159f678179500adce0f0beb84bd985",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_a": {
+      "to": "0x917685538BA7de19cE903A037B41805F7E6D8F67",
+      "wei": 5,
+      "transactionHash": "0xa248cf6b13ab89a9f09ad733b4515037d3980b5b172b2fc14f8ffda7b29e0b76",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_b": {
+      "to": "0xA35BDc1D939008Dbd42E012daff4E3B6cE47B7b8",
+      "wei": 5,
+      "transactionHash": "0x9cde4734e3bedfecc4c18e642b79217bb1c7e394a8105c935def97751a9d5c8f",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_c": {
+      "to": "0x774a894982fe554F1E1b5FBF55eE94E52c74Fca0",
+      "wei": 5,
+      "transactionHash": "0x7551e8c79fc92fa17cc76d1a35c13e37faa2b9aa044cf17481a8f300243a7b82",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_d": {
+      "to": "0x54ba11456b73F573a161Cd1220D4D6546CC1051f",
+      "wei": 5,
+      "transactionHash": "0x8e9a1c90cc81e784b409e5148076fe0e28344751870668e39c095be51813e416",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_e": {
+      "to": "0xa9BBF53250F88D4583CBdef099e3Dd9694123993",
+      "wei": 5,
+      "transactionHash": "0xa1355d4ae32210a9ea24b66289cd10569da10a646d298cc062c43c7a78766e7c",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "funder_v2": {
+      "to": "0x1E2642D48f91d7a3Cb9dd9dc12969db77aD79A5b",
+      "wei": 85,
+      "transactionHash": "0xdf2c5a4f6df39c60534ab2d3d1c6abd687f9d4b6131a42dd152772636b853b66",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_a_v2": {
+      "to": "0x917685538BA7de19cE903A037B41805F7E6D8F67",
+      "wei": 5,
+      "transactionHash": "0x0888c74d0e4702db4b86485ec728d2a23e891c71c593ad60012a65d41062fe2b",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_b_v2": {
+      "to": "0xA35BDc1D939008Dbd42E012daff4E3B6cE47B7b8",
+      "wei": 5,
+      "transactionHash": "0x7e9da49a1b226ea0a956cd79f7ad0f8e06f102f88df0a401e57ca659691fdd4d",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_c_v2": {
+      "to": "0x774a894982fe554F1E1b5FBF55eE94E52c74Fca0",
+      "wei": 5,
+      "transactionHash": "0x7dc9910eccf3482581f68b8d180e78e3bad1411973966136c23c7401bd92bae2",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_d_v2": {
+      "to": "0x54ba11456b73F573a161Cd1220D4D6546CC1051f",
+      "wei": 5,
+      "transactionHash": "0x6041e5e98adc3869a031e5ce9ddaa56ae71183a51e714bc57ce6c35ef6ba2ff5",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_e_v2": {
+      "to": "0xa9BBF53250F88D4583CBdef099e3Dd9694123993",
+      "wei": 5,
+      "transactionHash": "0xeaf9be1ddcd249f25b909f9838a180afdb023cc9963c92aff2366a5bccac86cb",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "funder_v3": {
+      "to": "0x1E2642D48f91d7a3Cb9dd9dc12969db77aD79A5b",
+      "wei": 25,
+      "transactionHash": "0xd34df01a5232fd2142e84263cc723d484a8b6623536a316dbf5fce7a724c4b40",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_a_v3": {
+      "to": "0x917685538BA7de19cE903A037B41805F7E6D8F67",
+      "wei": 5,
+      "transactionHash": "0x13b4d3a479d3190802d6fc9fc30802d2afc3a4b8208a985f6ec5e453342f7301",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_b_v3": {
+      "to": "0xA35BDc1D939008Dbd42E012daff4E3B6cE47B7b8",
+      "wei": 5,
+      "transactionHash": "0xed105d951377ed146fa402e623f85b6f77e97863ee25cd56b9d2af2263ccd395",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_c_v3": {
+      "to": "0x774a894982fe554F1E1b5FBF55eE94E52c74Fca0",
+      "wei": 5,
+      "transactionHash": "0x960b13a94ed71959329aedd4e855851bdfd591de8a5aa8680243c875f2800595",
+      "status": "FINALIZED_SUCCESS"
+    },
+    "hunter_e_v3": {
+      "to": "0xa9BBF53250F88D4583CBdef099e3Dd9694123993",
+      "wei": 5,
+      "transactionHash": "0xade8ef419076f9cbc8b7fba6c647e24ec714d233d648ce0b7e2bd2965ee104dd",
+      "status": "FINALIZED_SUCCESS"
+    }
+  },
+  "plannedOnChainMovementsWei": {
+    "seedTransfers": 110,
+    "payableRewardsAndBonds": 130,
+    "expectedContractPayouts": 130,
+    "totalGross": 370,
+    "replaySeedTransfers": 110,
+    "replayPayableRewardsAndBonds": 110,
+    "replayExpectedContractPayouts": 110,
+    "replayTotalGross": 330,
+    "finalReplaySeedTransfers": 45,
+    "finalReplayPayableRewardsAndBonds": 110,
+    "finalReplayExpectedContractPayouts": 110,
+    "finalReplayGross": 265,
+    "cumulativeGross": 965,
+    "note": "The first round includes one refunded 20 wei timeout attempt made at the exact local-clock 60-minute boundary. The second round replaced the pair and exposed a validator LLM_ERROR on the regression-test criterion. The final replay adds 25 wei to the funder and 20 wei to hunters A, B, C, and E; hunter D reuses its refunded v2 bond. Cumulative gross movements remain at 965 wei, below the 1,000 wei authorization."
+  },
+  "status": "FUNDED",
+  "wallets": {
+    "funder": "0x1E2642D48f91d7a3Cb9dd9dc12969db77aD79A5b",
+    "hunter_a": "0x917685538BA7de19cE903A037B41805F7E6D8F67",
+    "hunter_b": "0xA35BDc1D939008Dbd42E012daff4E3B6cE47B7b8",
+    "hunter_c": "0x774a894982fe554F1E1b5FBF55eE94E52c74Fca0",
+    "hunter_d": "0x54ba11456b73F573a161Cd1220D4D6546CC1051f",
+    "hunter_e": "0xa9BBF53250F88D4583CBdef099e3Dd9694123993",
+    "funder_v2": "0x1E2642D48f91d7a3Cb9dd9dc12969db77aD79A5b",
+    "hunter_a_v2": "0x917685538BA7de19cE903A037B41805F7E6D8F67",
+    "hunter_b_v2": "0xA35BDc1D939008Dbd42E012daff4E3B6cE47B7b8",
+    "hunter_c_v2": "0x774a894982fe554F1E1b5FBF55eE94E52c74Fca0",
+    "hunter_d_v2": "0x54ba11456b73F573a161Cd1220D4D6546CC1051f",
+    "hunter_e_v2": "0xa9BBF53250F88D4583CBdef099e3Dd9694123993",
+    "funder_v3": "0x1E2642D48f91d7a3Cb9dd9dc12969db77aD79A5b",
+    "hunter_a_v3": "0x917685538BA7de19cE903A037B41805F7E6D8F67",
+    "hunter_b_v3": "0xA35BDc1D939008Dbd42E012daff4E3B6cE47B7b8",
+    "hunter_c_v3": "0x774a894982fe554F1E1b5FBF55eE94E52c74Fca0",
+    "hunter_e_v3": "0xa9BBF53250F88D4583CBdef099e3Dd9694123993"
+  }
+}

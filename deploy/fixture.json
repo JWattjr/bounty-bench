@@ -1,0 +1,18 @@
+{
+  "repository": "JWattjr/bounty-bench-fixtures",
+  "baseSha": "f49c8ea7843772218adb0a13c5a8d7df792ea8a3",
+  "branches": {
+    "hunter-a": "1b46b7d97315ab57983db742c8d0304558b73e95",
+    "hunter-b": "958b8b71ac533da6152eaf703f7f1b874205299b",
+    "hunter-c": "d93ce372897b9918cb9bd46ed95adfe59e635b3b",
+    "hunter-d": "1b46b7d97315ab57983db742c8d0304558b73e95",
+    "hunter-e": "3632a919696a3c2f539efbd7b1f2c8031cd25d13"
+  },
+  "wallets": {
+    "hunter-a": "0x917685538BA7de19cE903A037B41805F7E6D8F67",
+    "hunter-b": "0xA35BDc1D939008Dbd42E012daff4E3B6cE47B7b8",
+    "hunter-c": "0x774a894982fe554F1E1b5FBF55eE94E52c74Fca0",
+    "hunter-d": "0x54ba11456b73F573a161Cd1220D4D6546CC1051f",
+    "hunter-e": "0xa9BBF53250F88D4583CBdef099e3Dd9694123993"
+  }
+}
