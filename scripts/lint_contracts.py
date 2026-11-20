@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CONTRACTS = [ROOT / "contracts" / "bounty_board.py", ROOT / "contracts" / "patch_judge.py"]
+CONTRACTS = [ROOT / "contracts" / name for name in ("bounty_board.py", "patch_judge.py", "issue_scout.py")]
 
 
 def main():

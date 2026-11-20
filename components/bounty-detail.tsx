@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Bounty, Proof, Snapshot, TxState, TxView } from "@/lib/domain";
 import { short } from "@/lib/domain";
 import { walletAccount, write } from "@/lib/wallet";
+import HuntGuide from "@/components/hunt-guide";
 
 const EXPLORER = "https://explorer-studio.genlayer.com";
 
@@ -109,7 +110,7 @@ export default function BountyDetail({ bountyId, proof }: { bountyId: string; pr
   return <main className="shell">
     <header className="topbar">
       <Link className="brand-lockup" href="/"><span className="brand-mark">BB</span><span>Bounty Bench</span></Link>
-      <nav className="topnav"><Link href="/">Board</Link><a className="nav-active" href="#claims">Bounty review</a></nav>
+      <nav className="topnav"><Link href="/">Board</Link><Link href="/scout">Scout an issue</Link><a className="nav-active" href="#claims">Bounty review</a></nav>
       <div className="topbar-right"><span className="network-chip"><i /> StudioNet <b>61999</b></span><span className="read-state"><span className="pulse-dot" /> Live read</span><button className="button button-quiet" onClick={connect}><Wallet size={14} /> {account ? short(account) : "Connect wallet"}</button></div>
     </header>
 
@@ -164,6 +165,7 @@ export default function BountyDetail({ bountyId, proof }: { bountyId: string; pr
       </div>
 
       <aside className="detail-side">
+        {bounty.status === "OPEN" && <HuntGuide repo={bounty.repo} base={bounty.base_sha} account={account} bondWei={bounty.claim_bond_wei} headSha={headSha} setHeadSha={setHeadSha} />}
         <section className="panel action-panel">
           <div className="panel-heading"><div><h2>Wallet actions</h2><p>Writes are sent from your connected EIP-1193 wallet.</p></div><span className="action-mark"><Wallet size={15} /></span></div>
           <label className="action-label">Commit SHA<input className="mono-input" value={headSha} onChange={(event) => setHeadSha(event.target.value)} placeholder="40 hexadecimal characters" /></label>

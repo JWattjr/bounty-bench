@@ -75,6 +75,20 @@ export default function Bench({ proof }: { proof: Proof }) {
   }, []);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const repo = params.get("repo");
+    const criteria = params.getAll("criterion");
+    if (repo && criteria.length) {
+      setForm((current) => ({ ...current, repo, title: params.get("title") ?? current.title, criteria: criteria.join("\n"), reward: "10", bond: "1", hours: "504" }));
+      void fetch(`https://api.github.com/repos/${repo}/commits/HEAD`, { headers: { Accept: "application/vnd.github+json" } })
+        .then((response) => (response.ok ? response.json() : null))
+        .then((data: { sha?: string } | null) => { if (data?.sha) setForm((current) => ({ ...current, base: data.sha ?? "" })); })
+        .catch(() => undefined);
+      setTimeout(() => document.getElementById("post")?.scrollIntoView(), 300);
+    }
+  }, []);
+
+  useEffect(() => {
     void refresh();
     const timer = setInterval(() => void refresh(), 30_000);
     return () => clearInterval(timer);
@@ -112,7 +126,7 @@ export default function Bench({ proof }: { proof: Proof }) {
   return <main className="shell">
     <header className="topbar">
       <Link className="brand-lockup" href="/"><span className="brand-mark">BB</span><span>Bounty Bench</span></Link>
-      <nav className="topnav"><a className="nav-active" href="#board">Board</a><a href="#proof">Release proof</a></nav>
+      <nav className="topnav"><a className="nav-active" href="#board">Board</a><Link href="/scout">Scout an issue</Link><a href="#proof">Release proof</a></nav>
       <div className="topbar-right"><span className="network-chip"><i /> StudioNet <b>61999</b></span><span className="read-state"><span className="pulse-dot" /> {snapshot ? "Live read" : "Connecting"}</span><button className="button button-quiet" onClick={connect}><Wallet size={14} /> {account ? short(account) : "Connect wallet"}</button></div>
     </header>
 
@@ -139,7 +153,7 @@ export default function Bench({ proof }: { proof: Proof }) {
       </section>
 
       <aside className="side-stack">
-        <section className="panel create-panel">
+        <section className="panel create-panel" id="post">
           <div className="panel-heading"><div><h2>Post a bounty</h2><p>One payable call freezes the reward and criteria.</p></div><span className="action-mark"><ArrowDownRight size={15} /></span></div>
           <form className="create-form" onSubmit={createBounty}>
             <label>GitHub repository<input value={form.repo} onChange={(event) => setForm({ ...form, repo: event.target.value })} placeholder="owner/repository" /></label>

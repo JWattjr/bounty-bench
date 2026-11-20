@@ -257,12 +257,44 @@ async function winner() {
   log("winner DONE", c.statusAfter, "refunded", c.claimsRefunded, "paid", c.claimsPaid);
 }
 
+
+// Live, open bounties built from scouted fixture issues (no claims; reviewers can hunt them).
+const LIVE_BASE = "cde0e93884005dc0d3dd3cc711ad9dce8116eca9";
+async function openBounties() {
+  const proof = JSON.parse(fs.readFileSync(path.join(ROOT, "deploy/proof.json"), "utf8"));
+  const c = caseOf("openBounties");
+  c.items ??= {};
+  for (const [issue, record] of Object.entries(proof.scout?.records ?? {})) {
+    if (record.status !== "DRAFTED") continue;
+    const item = (c.items[issue] ??= {});
+    item.deadline ??= Math.floor(Date.now() / 1000) + 21 * 86400;
+    item.title = ("Fix: " + record.issue_title).slice(0, 140);
+    item.criteria = record.criteria;
+    item.draftId = record.id;
+    save();
+    const label = `open-issue-${issue}-create`;
+    const hash = await act(label, "funder", "create_bounty", [REPO, LIVE_BASE, item.title, JSON.stringify(record.criteria), item.deadline, 1], 10n);
+    await finalTree(hash, label);
+    if (!item.bountyId) {
+      const ids = await view("get_bounty_ids", [0, 50]);
+      item.bountyId = ids[ids.length - 1];
+      save();
+    }
+    const bounty = await view("get_bounty", [item.bountyId]);
+    item.status = bounty.status;
+    save();
+    log("open bounty", item.bountyId, "issue", issue, bounty.status);
+  }
+  c.done = true;
+  save();
+}
+
 const which = process.argv[2] ?? "all";
-const jobs = { rejected, closing, winner };
+const jobs = { rejected, closing, winner, open: openBounties };
 if (which === "all") {
   // create sequentially so each bounty id is unambiguous, then run the long waits together
   for (const name of ["rejected", "closing", "winner"]) await creates[name]();
 }
-const run = which === "all" ? Object.values(jobs) : [jobs[which]];
+const run = which === "all" ? [jobs.rejected, jobs.closing, jobs.winner] : [jobs[which]];
 await Promise.all(run.map((fn) => fn()));
 log("finished", which);

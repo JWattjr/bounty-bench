@@ -80,7 +80,23 @@ export type Proof = {
   sourceCommit?: string | null;
   appUrl?: string | null;
   fixturesRepo?: string;
+  scout?: { records?: Record<string, ScoutDraft> };
 };
+
+export type ScoutDraft = {
+  id: string;
+  repo: string;
+  issue_number: number;
+  requester: string;
+  issue_title: string;
+  issue_digest: string;
+  status: "DRAFTED" | "UNACTIONABLE";
+  criteria: string[];
+  reason: string;
+  created_at: number;
+};
+
+export type ScoutSnapshot = { drafts: ScoutDraft[]; readAt: string; error?: string; stale?: boolean };
 
 export type TxView = {
   hash: string;

@@ -24,6 +24,16 @@
       "address": "0x739D4947Ecfa7622A79aeBBb91FFA57Ca9dFB898",
       "source": "patch_judge.py",
       "sha256": "f484ec8e7487719abb476af54cd6ad2d2529067a1ae47bff68985abba912f78b"
+    },
+    "AccessProbeV3": {
+      "address": "0xF1CBe26Edf59d9d23a573a193DC7058F90311010",
+      "source": "access_probe_v3.py",
+      "sha256": "284d53914ca5015ce219f3bf1231211ce7348f8a05e7acf6a3ab867111f92e0f"
+    },
+    "IssueScout": {
+      "address": "0x613D07c39f4a09e5a657A5B6820238cFd7589a53",
+      "source": "issue_scout.py",
+      "sha256": "908f1b470ba2399e033b85068a3f77fd2f345a3957dd2afee87de43f39439bd4"
     }
   },
   "transactions": {
@@ -119,7 +129,14 @@
     "close-timeout": "0x3177e0b8127f561d6a8c96ea45f5b774ba9106ad79380ba44e07743b4bee6e8a",
     "close-timeout-child-0": "0xebe9fa36b53cb095e337a2fddbb99bd99be7be7f17917e483373e4ec458585ac",
     "close-timeout-child-0-child-0": "0xa86818c73f6b55c3203ef14db61a500cb0ef2f8147a1324e1832a2320ab71c93",
-    "record-board-close-timeout": "0xef392f585dafb69995e76b8b1059b8cea845ecb7f5f421d073030464548fe347"
+    "record-board-close-timeout": "0xef392f585dafb69995e76b8b1059b8cea845ecb7f5f421d073030464548fe347",
+    "probe-v3-deploy": "0xc77df67b54eedf2b050df1283956415dc0451eb20ed69ac446058c73ffec49da",
+    "probe-github-issues": "0xd1d23311072cb8e1e8a7fbf738b3faf4b5320374906fa86432234ddf333de113",
+    "deploy-issue-scout": "0x109b265c08750e0ce5e122250ae2e04a23522ca894852e2a04ba8f834a2fb956",
+    "scout-draft-issue-1": "0x2edd2dc1148345df1f17dd87ee77ef58022098474345bd0edabc6a9ac06a4477",
+    "scout-draft-issue-2": "0xfa5709b5d3192ec1a90f66acd9a04a5e43c3973454facc6dbe59ad556bed1a5b",
+    "scout-draft-issue-3": "0x713e936e935a31cc7b44a4ad1fc8e6ad4dcda4de1bfb8de21adac97eb2f3b21e",
+    "scout-draft-issue-4": "0xc3b7f095c1c54a8ca3b2db17e8b19d32c61c0ae163bc8c2d0ef7d4df61debfdf"
   },
   "deposits": {
     "create-rejected": 15,
@@ -1069,5 +1086,92 @@
       "release": "v2"
     }
   },
-  "nonSuccessfulTransactions": {}
+  "nonSuccessfulTransactions": {},
+  "probeResultsIssues": {
+    "https://api.github.com/repos/JWattjr/bounty-bench-fixtures/issues/1": {
+      "bytes": 2683,
+      "sha256": "ba99b97807d17fb5f2753b774561f43f42fdb40ac4cbb8865949f4024006152a",
+      "status": 200,
+      "title": "truncate_words keeps one word too few"
+    },
+    "https://api.github.com/repos/octocat/Hello-World/issues/1": {
+      "bytes": 3278,
+      "sha256": "ca9105b49ce1c26d65157be5d7d8b7a6ab3bf33202cb4acc5dcc56449fb875fb",
+      "status": 200,
+      "title": "Edited README via GitHub"
+    },
+    "https://github.com/octocat/Hello-World/issues/1": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": 406,
+      "title": ""
+    }
+  },
+  "scout": {
+    "drafts": {
+      "1": "draft-1",
+      "2": "draft-2",
+      "3": "draft-3",
+      "4": "draft-4"
+    },
+    "records": {
+      "1": {
+        "created_at": 1795194318,
+        "criteria": [
+          "adds a test that exercises `truncate_words` with `truncate_words(\"a b c d\", 3)` expecting \"a b c...\"",
+          "changes `truncate_words` so that `truncate_words(\"a b c d\", 3)` returns \"a b c...\""
+        ],
+        "id": "draft-1",
+        "issue_digest": "e05f1b0fbbcc8ac4369e89f2dd1f6705e812ec3a0e077cf53e70a30a5e822e1e",
+        "issue_number": 1,
+        "issue_title": "truncate_words keeps one word too few",
+        "reason": "Issue provides concrete input, expected output, and function name, enabling specific test and behavior criteria.",
+        "repo": "JWattjr/bounty-bench-fixtures",
+        "requester": "0x1e2642d48f91d7a3cb9dd9dc12969db77ad79a5b",
+        "status": "DRAFTED"
+      },
+      "2": {
+        "created_at": 1795194395,
+        "criteria": [
+          "changes `parse_duration` so that `parse_duration(\"1h30m\")` returns `5400` seconds",
+          "adds a test that exercises `parse_duration` with `\"1h30m\"` and expected result `5400` seconds"
+        ],
+        "id": "draft-2",
+        "issue_digest": "3c55c3e8717bec0ccfe301d958a32600285677e8325d887c0fb85efc21a6e725",
+        "issue_number": 2,
+        "issue_title": "parse_duration ignores everything after the first unit",
+        "reason": "Issue names parse_duration and a concrete expected value for 1h30m, so it is actionable.",
+        "repo": "JWattjr/bounty-bench-fixtures",
+        "requester": "0x1e2642d48f91d7a3cb9dd9dc12969db77ad79a5b",
+        "status": "DRAFTED"
+      },
+      "3": {
+        "created_at": 1795194460,
+        "criteria": [
+          "changes `title_case` so that `title_case(\"o'neil's book\")` returns `\"O'neil's Book\"`",
+          "adds a test that exercises `title_case` with `\"o'neil's book\"` and expected result `\"O'neil's Book\"`"
+        ],
+        "id": "draft-3",
+        "issue_digest": "a91b00f3bc907df236da0dcda18493ed5c40b2b15727ec1b5df698d91dbf26b0",
+        "issue_number": 3,
+        "issue_title": "title_case capitalizes letters after an apostrophe",
+        "reason": "The issue specifies a function, concrete input, expected result, and a regression test.",
+        "repo": "JWattjr/bounty-bench-fixtures",
+        "requester": "0x1e2642d48f91d7a3cb9dd9dc12969db77ad79a5b",
+        "status": "DRAFTED"
+      },
+      "4": {
+        "created_at": 1795194538,
+        "criteria": [],
+        "id": "draft-4",
+        "issue_digest": "b42808720f100385380f5c412876769d9431e08bee8a98625cd500221f7f11af",
+        "issue_number": 4,
+        "issue_title": "Discussion: make the helpers nicer",
+        "reason": "Issue is a vague discussion about cleaner code and naming; it names no function, file, or concrete expected behavior.",
+        "repo": "JWattjr/bounty-bench-fixtures",
+        "requester": "0x1e2642d48f91d7a3cb9dd9dc12969db77ad79a5b",
+        "status": "UNACTIONABLE"
+      }
+    }
+  }
 }

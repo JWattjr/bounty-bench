@@ -1,7 +1,7 @@
 import { createClient, decodeLocalnetTransaction } from "genlayer-js";
 import { studionet } from "genlayer-js/chains";
 import { TransactionHashVariant, type TransactionHash } from "genlayer-js/types";
-import type { Bounty, Proof, Snapshot, TxView } from "./domain";
+import type { Bounty, Proof, ScoutDraft, ScoutSnapshot, Snapshot, TxView } from "./domain";
 import { transactionState } from "./domain";
 import source from "@/deploy/proof.json";
 
@@ -42,6 +42,27 @@ export async function read<T>(method: string, args: unknown[] = []): Promise<T> 
       ? JSON.parse(result)
       : result) as T;
   });
+}
+
+export async function readScout<T>(method: string, args: unknown[] = []): Promise<T> {
+  const address = recorded.contracts.IssueScout?.address;
+  if (!address) throw Error("The IssueScout deployment is not recorded yet.");
+  return memo(`scout:${method}:${JSON.stringify(args)}`, async () => {
+    const result = await chain.readContract({
+      address: address as `0x${string}`,
+      functionName: method,
+      args: args as never[],
+      transactionHashVariant: TransactionHashVariant.LATEST_FINAL,
+    });
+    return (typeof result === "string" && /^[\[{]/.test(result) ? JSON.parse(result) : result) as T;
+  });
+}
+
+export async function scoutSnapshot(): Promise<ScoutSnapshot> {
+  const ids = await readScout<string[]>("get_draft_ids", [0, 50]);
+  const drafts: ScoutDraft[] = [];
+  for (const id of (ids ?? []).slice(-12).reverse()) drafts.push(await readScout<ScoutDraft>("get_draft", [id]));
+  return { drafts, readAt: new Date().toISOString() };
 }
 
 export async function snapshot(): Promise<Snapshot> {
