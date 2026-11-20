@@ -50,6 +50,8 @@ export type Bounty = {
   reward_remaining_wei: string;
   queue_length: number;
   winner_id: string;
+  close_cursor?: number;
+  refund_cursor?: number;
   transactions: { action: string; hash: string }[];
   claims?: Claim[];
   balances?: Record<string, string>;

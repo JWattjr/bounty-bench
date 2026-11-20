@@ -74,6 +74,9 @@ export default function BountyDetail({ bountyId, proof }: { bountyId: string; pr
 
   const bounty = snapshot?.bounties.find((item) => item.id === bountyId) as Bounty | undefined;
   const claims = bounty?.claims ?? [];
+  const closing = bounty?.status === "CLOSING";
+  const canClose = !!bounty && (closing || (bounty.status === "OPEN" && Date.now() / 1000 >= bounty.deadline + 1800));
+  const isFunder = !!bounty && !!account && account.toLowerCase() === bounty.funder.toLowerCase();
   const selected = claims.find((item) => item.id === selectedId) ?? claims[0];
   const criteriaResults = (bounty as (Bounty & { spec_results?: { accepted: boolean; reason: string }[] }) | undefined)?.spec_results ?? [];
   const transactionMap = useMemo(() => new Map((bounty?.transactions ?? []).map((item) => [item.action, item.hash])), [bounty?.transactions]);
@@ -166,7 +169,10 @@ export default function BountyDetail({ bountyId, proof }: { bountyId: string; pr
           <label className="action-label">Commit SHA<input className="mono-input" value={headSha} onChange={(event) => setHeadSha(event.target.value)} placeholder="40 hexadecimal characters" /></label>
           <button className="button button-primary full-width" disabled={busy || !/^[0-9a-f]{40}$/i.test(headSha) || bounty.status !== "OPEN"} onClick={() => void submit("Submit claim", "claim", [bounty.id, headSha.trim()], BigInt(bounty.claim_bond_wei))}>{busy ? "Waiting for wallet…" : `Submit claim · ${bounty.claim_bond_wei} wei bond`}</button>
           <button className="button button-secondary full-width" disabled={busy || bounty.status !== "OPEN"} onClick={() => void submit("Judge next criterion", "judge_next", [bounty.id])}>Judge next criterion</button>
-          <button className="button button-secondary full-width" disabled={busy || bounty.status !== "OPEN" || Date.now() / 1000 < bounty.deadline + 1800} onClick={() => void submit("Close bounty", "close", [bounty.id])}>Close after deadline + grace</button>
+          <button className="button button-secondary full-width" disabled={busy || !canClose} onClick={() => void submit(closing ? "Continue closing" : "Close bounty", "close", [bounty.id])}>{closing ? `Continue closing · ${Math.min(bounty.close_cursor ?? 0, claims.length)} of ${claims.length} claims settled` : "Close after deadline + grace"}</button>
+          {bounty.status === "WINNER_REFUNDS_PENDING" && <button className="button button-secondary full-width" disabled={busy} onClick={() => void submit("Continue winner refunds", "refund_pending", [bounty.id])}>{`Continue winner refunds · ${Math.min(bounty.refund_cursor ?? 0, claims.length)} of ${claims.length} claims processed`}</button>}
+          {bounty.status === "SPEC_REJECTED" && <button className="button button-secondary full-width" disabled={busy || !isFunder} onClick={() => void submit("Refund rejected reward", "refund_rejected", [bounty.id])}>Refund rejected reward</button>}
+          {bounty.status === "SPEC_REJECTED" && !isFunder && <p className="form-note"><ShieldCheck size={13} /> Only the funder wallet ({short(bounty.funder, 7, 5)}) can refund a rejected specification.</p>}
           <p className="form-note"><ShieldCheck size={13} /> Only claims with finalized identity checks can enter judgment. The claim order cannot be edited.</p>
           {actionError && <p className="form-error">{actionError}</p>}
         </section>
