@@ -91,15 +91,39 @@ def render(plan):
     return out
 
 
+def narrate(spec, model_dir):
+    """Synthesize each scene's voice with Kokoro; stretch scenes to fit; return the wav path."""
+    import numpy as np, soundfile as sf
+    from kokoro_onnx import Kokoro
+    kokoro = Kokoro(str(Path(model_dir) / "kokoro-v1.0.onnx"), str(Path(model_dir) / "voices-v1.0.bin"))
+    rate, parts = 24000, []
+    for scene in spec:
+        samples, sr = kokoro.create(scene["voice"], voice="af_heart", speed=1.0, lang="en-us")
+        rate = sr
+        scene["seconds"] = max(scene["seconds"], len(samples) / sr + 0.9)
+        pad = np.zeros(int(scene["seconds"] * sr) - len(samples), dtype=samples.dtype)
+        parts.append(np.concatenate([samples, pad]))
+    out = DEMO / "narration.wav"
+    sf.write(str(out), np.concatenate(parts), rate)
+    return out
+
+
 def main():
     spec = json.loads((DEMO / "storyboard.json").read_text(encoding="utf-8"))
+    wav = narrate(spec, sys.argv[1]) if len(sys.argv) > 1 else None
     plan = []
     for scene in spec:
         if scene["type"] == "title":
             plan.append((title_card(scene["title"], scene["subtitle"], scene.get("logo", True)), scene["seconds"]))
         else:
             plan.append((shot_card(DEMO / scene["image"], scene["caption"]), scene["seconds"]))
-    print("video", render(plan), "seconds", sum(s for _, s in plan))
+    silent = render(plan)
+    if wav:
+        import subprocess, imageio_ffmpeg
+        final = DEMO / "bounty-bench-demo-voiced.mp4"
+        subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-i", str(silent), "-i", str(wav), "-c:v", "copy", "-c:a", "aac", "-shortest", str(final)], check=True, capture_output=True)
+        silent = final
+    print("video", silent, "seconds", sum(s for _, s in plan))
 
 
 if __name__ == "__main__":

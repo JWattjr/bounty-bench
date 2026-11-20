@@ -3,48 +3,56 @@
   "type": "title",
   "title": "Bounty Bench",
   "subtitle": "Code bounties that pay on the diff, not on the maintainer's mood",
-  "seconds": 6
+  "seconds": 6,
+  "voice": "Bounty Bench. Code bounties that pay on the diff, not on the maintainer's mood. Built on GenLayer."
  },
  {
   "type": "shot",
   "image": "home.png",
   "caption": "A live board on GenLayer StudioNet: escrowed rewards, frozen criteria, a fixed claim queue.",
-  "seconds": 8
+  "seconds": 8,
+  "voice": "This is the live board on StudioNet. Every bounty has escrowed rewards, frozen acceptance criteria, and a claim queue whose order can't be edited."
  },
  {
   "type": "shot",
   "image": "scout.png",
   "caption": "Scout an issue: validators draft criteria a diff can prove, and reject vague issues.",
-  "seconds": 9
+  "seconds": 9,
+  "voice": "Start by scouting an issue. Paste a GitHub issue, and validators draft criteria that a code diff can actually prove. Vague issues are rejected as unactionable."
  },
  {
   "type": "shot",
   "image": "bounty-bounty-8.png",
   "caption": "Three live bounties on real bugs. The Hunt guide takes you from faucet to claim.",
-  "seconds": 10
+  "seconds": 10,
+  "voice": "Three live bounties on real bugs are open right now. The Hunt guide takes you from the faucet to a claim, and checks your commit in the browser before you spend a bond."
  },
  {
   "type": "shot",
   "image": "bounty-bounty-3.png",
   "caption": "Validators fetch the pinned diff and judge one criterion at a time, with quote and digest.",
-  "seconds": 10
+  "seconds": 10,
+  "voice": "When a claim comes in, validators fetch the pinned diff and judge one criterion at a time, with an exact quote and a digest you can verify yourself."
  },
  {
   "type": "shot",
   "image": "bounty-bounty-6.png",
   "caption": "Winner paid by code after a finalized verdict. Remaining bonds refund in steps.",
-  "seconds": 9
+  "seconds": 9,
+  "voice": "The winner is paid by contract code after a finalized verdict, and the remaining bonds are refunded in safe steps."
  },
  {
   "type": "shot",
   "image": "bounty-bounty-7.png",
   "caption": "Stuck bounties always close: repeat Close until CLOSED, 21 of 21 refunded.",
-  "seconds": 9
+  "seconds": 9,
+  "voice": "Nothing gets stuck. If a bounty is closing, just press close again. Here, all twenty-one claims were refunded across two calls."
  },
  {
   "type": "title",
   "title": "Try it: bounty-bench.vercel.app",
   "subtitle": "Every contract, transaction and verdict is on the StudioNet Explorer",
-  "seconds": 6
+  "seconds": 6,
+  "voice": "Try it at bounty-bench dot vercel dot app. Every contract, transaction, and verdict is on the StudioNet Explorer."
  }
 ]
