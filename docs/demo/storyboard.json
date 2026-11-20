@@ -1,0 +1,50 @@
+[
+ {
+  "type": "title",
+  "title": "Bounty Bench",
+  "subtitle": "Code bounties that pay on the diff, not on the maintainer's mood",
+  "seconds": 6
+ },
+ {
+  "type": "shot",
+  "image": "home.png",
+  "caption": "A live board on GenLayer StudioNet: escrowed rewards, frozen criteria, a fixed claim queue.",
+  "seconds": 8
+ },
+ {
+  "type": "shot",
+  "image": "scout.png",
+  "caption": "Scout an issue: validators draft criteria a diff can prove, and reject vague issues.",
+  "seconds": 9
+ },
+ {
+  "type": "shot",
+  "image": "bounty-bounty-8.png",
+  "caption": "Three live bounties on real bugs. The Hunt guide takes you from faucet to claim.",
+  "seconds": 10
+ },
+ {
+  "type": "shot",
+  "image": "bounty-bounty-3.png",
+  "caption": "Validators fetch the pinned diff and judge one criterion at a time, with quote and digest.",
+  "seconds": 10
+ },
+ {
+  "type": "shot",
+  "image": "bounty-bounty-6.png",
+  "caption": "Winner paid by code after a finalized verdict. Remaining bonds refund in steps.",
+  "seconds": 9
+ },
+ {
+  "type": "shot",
+  "image": "bounty-bounty-7.png",
+  "caption": "Stuck bounties always close: repeat Close until CLOSED, 21 of 21 refunded.",
+  "seconds": 9
+ },
+ {
+  "type": "title",
+  "title": "Try it: bounty-bench.vercel.app",
+  "subtitle": "Every contract, transaction and verdict is on the StudioNet Explorer",
+  "seconds": 6
+ }
+]
