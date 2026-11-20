@@ -65,12 +65,18 @@ export async function scoutSnapshot(): Promise<ScoutSnapshot> {
   return { drafts, readAt: new Date().toISOString() };
 }
 
-export async function snapshot(): Promise<Snapshot> {
+// The list costs one read per bounty. Claims, balances and transaction links are read only for the
+// bounty being opened, so a cold board load stays well under StudioNet's 30 requests per minute.
+export async function snapshot(detailId?: string): Promise<Snapshot> {
   const ids = await read<string[]>("get_bounty_ids", [0, 50]);
   const bounties: Bounty[] = [];
   for (const id of (ids ?? []).slice(-20).reverse()) {
-    const [bounty, claims, balances, transactions] = await Promise.all([
-      read<Bounty>("get_bounty", [id]),
+    const bounty = await read<Bounty>("get_bounty", [id]);
+    if (id !== detailId) {
+      bounties.push({ ...bounty, claims: [], balances: {}, transactions: [] });
+      continue;
+    }
+    const [claims, balances, transactions] = await Promise.all([
       read<Bounty["claims"]>("get_claims", [id, 0, 50]),
       read<Bounty["balances"]>("get_balances", [id]),
       read<Bounty["transactions"]>("get_transaction_hashes", [id]),

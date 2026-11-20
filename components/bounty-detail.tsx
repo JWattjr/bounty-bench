@@ -60,12 +60,12 @@ export default function BountyDetail({ bountyId, proof }: { bountyId: string; pr
 
   const refresh = useCallback(async () => {
     try {
-      const response = await fetch("/api/live", { cache: "no-store" });
+      const response = await fetch(`/api/live?id=${encodeURIComponent(bountyId)}`, { cache: "no-store" });
       const value = await response.json() as Snapshot;
       setSnapshot(value);
       setLoadError(value.error ?? "");
     } catch (error) { setLoadError(error instanceof Error ? error.message : "StudioNet read failed."); }
-  }, []);
+  }, [bountyId]);
 
   useEffect(() => {
     void refresh();

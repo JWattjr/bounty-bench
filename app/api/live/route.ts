@@ -3,25 +3,27 @@ import type { Snapshot } from "@/lib/domain";
 
 export const dynamic = "force-dynamic";
 
-// Last good StudioNet read, kept per server instance. Served while fresh, and as
-// a stale fallback when StudioNet rate-limits or fails (429/500/503).
+// Last good StudioNet read per view (board list, or one bounty with full detail), kept per server
+// instance. Served while fresh, and as a stale fallback when StudioNet rate-limits or fails.
 const FRESH_MS = 60_000;
-let lastGood: { at: number; value: Snapshot } | null = null;
+const lastGood = new Map<string, { at: number; value: Snapshot }>();
 
-export async function GET() {
+export async function GET(request: Request) {
   const headers = { "Cache-Control": "no-store" };
-  if (lastGood && Date.now() - lastGood.at < FRESH_MS) {
-    return Response.json(lastGood.value, { headers });
-  }
+  const id = new URL(request.url).searchParams.get("id") ?? "";
+  const key = /^bounty-\d{1,6}$/.test(id) ? id : "";
+  const cached = lastGood.get(key);
+  if (cached && Date.now() - cached.at < FRESH_MS) return Response.json(cached.value, { headers });
   try {
-    const value = await snapshot();
-    lastGood = { at: Date.now(), value };
+    const value = await snapshot(key || undefined);
+    lastGood.set(key, { at: Date.now(), value });
     return Response.json(value, { headers });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Live reads are unavailable.";
-    if (lastGood) {
+    const fallback = cached ?? lastGood.get("");
+    if (fallback) {
       return Response.json(
-        { ...lastGood.value, stale: true, staleSince: new Date(lastGood.at).toISOString(), error: `Live read unavailable (${message}). Showing the last good read.` },
+        { ...fallback.value, stale: true, staleSince: new Date(fallback.at).toISOString(), error: `Live read unavailable (${message}). Showing the last good read.` },
         { headers },
       );
     }
