@@ -151,5 +151,11 @@
     "hunter_b_v3": "0xA35BDc1D939008Dbd42E012daff4E3B6cE47B7b8",
     "hunter_c_v3": "0x774a894982fe554F1E1b5FBF55eE94E52c74Fca0",
     "hunter_e_v3": "0xa9BBF53250F88D4583CBdef099e3Dd9694123993"
+  },
+  "refundControls": {
+    "approvedAdditionalWei": 500,
+    "newSourceTransfersWei": 0,
+    "grossPayableWei": 139,
+    "note": "Rewards and bonds recycled through existing demo wallets; every wei was returned or paid inside the contract flow."
   }
 }

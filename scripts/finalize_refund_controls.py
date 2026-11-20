@@ -49,7 +49,25 @@ proof["refundControls"] = {
         "controlTransaction": tx.get("winner-refund_pending-1"),
     },
 }
-gross = 15 + 10 + 10 + 21 + 22
+open_items = cases.get("openBounties", {}).get("items", {})
+proof["liveBounties"] = {
+    issue: {
+        "bountyId": item["bountyId"],
+        "draftId": item["draftId"],
+        "title": item["title"],
+        "criteria": item["criteria"],
+        "deadline": item["deadline"],
+        "status": item.get("status"),
+        "createTransaction": tx["open-issue-%s-create" % issue],
+    }
+    for issue, item in open_items.items()
+}
+proof["refundControls"]["closingAttempt1"] = {
+    "bountyId": cases["closingAttempt1"]["bountyId"],
+    "note": cases["closingAttempt1"]["note"],
+    "closeTransactions": [tx["closingAttempt1-close-1"], tx["closingAttempt1-close-2"]],
+}
+gross = 15 + (10 + 21) + (10 + 21) + (10 + 22) + 30  # rejected, close attempt 1, close attempt 2, winner, three open rewards
 funding["refundControls"] = {
     "approvedAdditionalWei": 500,
     "newSourceTransfersWei": 0,

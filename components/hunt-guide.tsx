@@ -44,7 +44,7 @@ export default function HuntGuide({ repo, base, account, bondWei, headSha, setHe
         <pre className="hunt-code">{commands}</pre>
         <div className="hunt-actions"><button className="text-button" onClick={() => void copy("commands", commands)}>{copied === "commands" ? <Check size={12} /> : <Copy size={12} />} Copy commands</button><button className="text-button" onClick={() => void copy("line", trailer)} disabled={!account}>{copied === "line" ? <Check size={12} /> : <Copy size={12} />} Copy claimant line</button></div>
       </li>
-      <li><strong>Check your commit, then claim.</strong> Paste the head SHA above. <button className="text-button" onClick={() => void run()} disabled={checking || headSha.trim().length === 0}><ShieldCheck size={12} /> {checking ? "Checking…" : "Check my commit"}</button>
+      <li><strong>Check your commit, then claim.</strong> Paste your head SHA in the field below. <button className="text-button" onClick={() => void run()} disabled={checking || headSha.trim().length === 0}><ShieldCheck size={12} /> {checking ? "Checking…" : "Check my commit"}</button>
         {check && <p className={`hunt-result ${check.ok ? "tone-good" : "tone-bad"}`}><strong>{check.title}.</strong> {check.detail}</p>}
       </li>
     </ol>

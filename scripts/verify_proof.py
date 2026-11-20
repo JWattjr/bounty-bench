@@ -228,12 +228,53 @@ def verify_refund_controls():
     print("REFUND-CONTROL refund_pending", summary["winner"]["bountyId"], winner["status"], len(winner_claims), "claims", flush=True)
 
 
+def verify_scout():
+    """Read each recorded IssueScout draft back from the contract and compare status and criteria."""
+    scout = PROOF.get("scout")
+    if not scout or "IssueScout" not in PROOF.get("contracts", {}):
+        return
+    from genlayer_py import create_client, studionet
+    from genlayer_py.provider import provider
+    from genlayer_py.types import TransactionHashVariant
+
+    original = provider.requests.post
+
+    def browser_post(url, **kwargs):
+        kwargs["headers"] = {**kwargs.get("headers", {}), **HEADERS}
+        kwargs.setdefault("timeout", 45)
+        return original(url, **kwargs)
+
+    provider.requests.post = browser_post
+    client = create_client(chain=studionet)
+    address = PROOF["contracts"]["IssueScout"]["address"]
+    for issue, draft_id in scout.get("drafts", {}).items():
+        for attempt in range(MAX_ATTEMPTS):
+            try:
+                time.sleep(2.1)
+                value = client.read_contract(
+                    address, "get_draft", args=[draft_id],
+                    transaction_hash_variant=TransactionHashVariant.LATEST_FINAL,
+                )
+                break
+            except Exception as error:
+                if attempt == MAX_ATTEMPTS - 1:
+                    raise
+                print("Transient scout read failure; retrying", str(error)[:80], flush=True)
+                time.sleep(retry_delay(attempt))
+        record = json.loads(value) if isinstance(value, str) else value
+        recorded = scout["records"][issue]
+        if record.get("status") != recorded["status"] or record.get("criteria") != recorded["criteria"]:
+            raise RuntimeError("IssueScout draft for issue " + issue + " no longer matches the manifest")
+        print("SCOUT issue", issue, draft_id, record["status"], len(record["criteria"]), "criteria", flush=True)
+
+
 def main():
     if PROOF.get("network") != "StudioNet" or int(PROOF.get("chainId", -1)) != 61999:
         raise RuntimeError("Proof manifest network does not identify StudioNet 61999")
     verify_contracts()
     verify_transactions()
     verify_refund_controls()
+    verify_scout()
     print("Read-only proof verification passed. No Portal fields were submitted.", flush=True)
 
 

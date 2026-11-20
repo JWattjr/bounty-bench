@@ -12,33 +12,36 @@ Code bounties that pay on the diff, not on the maintainer’s mood.
 
 ## Description
 
-Bounty Bench is an open code-bounty board built with two GenLayer Intelligent Contracts and a deployed Next.js app. A funder escrows GEN against a GitHub repository, a pinned base commit, and up to four written acceptance criteria. Hunters submit commits with a claimant trailer and an exact bond. GenLayer validators fetch the pinned diff and judge one criterion at a time. The Board contract enforces queue order and moves funds only after finalized results: a passing first claim receives the reward and its bond, failed claims forfeit their bonds, and other pending bonds are returned. Vague specifications are rejected with reasons and a refund path. If evidence is unavailable or the deadline grace period expires, the contract refunds rather than leaving funds stuck. The live demo covers spec rejection, front-running protection, partial fixes, prompt-injection resistance, a winning fix, and timeout closure.
+Bounty Bench pays code bounties on the diff, not on a maintainer's mood. Paste a GitHub issue and the IssueScout contract drafts acceptance criteria that validators check in code. A funder escrows GEN; hunters submit a pinned commit with a claimant trailer and a bond. GenLayer validators fetch the diff and judge one criterion per transaction, and the Board contract moves money only after finalized verdicts: first passing claim wins, failed claims forfeit bonds, the rest are refunded. Vague specs are rejected with a refund, stuck bounties can always be closed from the app, and three live bounties on real bugs are open to claim now. A Hunt guide walks a reviewer from faucet to claim and checks their commit in the browser first.
 
 ## Reviewer steps
 
-1. Open the production app and select the main bounty.
-2. Compare the frozen criteria and queue with the current BountyBoard reads.
-3. Open each claim to inspect the criterion verdicts, evidence quote, digest, bond disposition, and transaction links.
-4. Compare Hunter D’s pinned commit diff with the recorded quotes, then inspect the finalized payout and Hunter E’s refund.
-5. Open the rejected-spec and timeout cases to confirm their refund outcomes.
-6. Use the two Explorer contract evidence entries below to verify the current v3 addresses on StudioNet (chain 61999). The app and repository links are additional evidence.
+1. Open the production app; three live bounties (`bounty-8` to `bounty-10`) are open on real bugs.
+2. Open **Scout an issue** and read the IssueScout drafts, including one vague issue rejected as UNACTIONABLE.
+3. Open the main bounty (`bounty-3`) and inspect the A–E claim queue, per-criterion verdicts, quotes, digests and bond outcomes.
+4. Open `bounty-4`, `bounty-6` and `bounty-7` to see the refund controls and their finalized results.
+5. Follow the Hunt guide on an open bounty to claim it yourself.
+6. Verify the three contract evidence entries below on StudioNet (chain 61999).
 
 ## Expected outcome
 
-The final v3 main bounty settles to Hunter D after A fails the deterministic claimant-trailer check, B fails the required regression-test criterion, and C fails the behavior criterion despite containing an instruction-like comment. Hunter E’s pending bond is refunded. The rejected vague-spec bounty is refunded to the funder, and the 20 wei no-claim timeout bounty has closed after its deadline plus 30-minute grace period and returned its reward. The v3 payouts and cross-contract callbacks are finalized on StudioNet. Earlier v1/v2 attempts are archived in the repository README.
+The main bounty settles to Hunter D after A fails the claimant-trailer check, B fails the regression-test criterion and C fails the behavior criterion. The rejected spec is refunded, the closing case moves CLOSING to CLOSED across two calls with 21 of 21 refunded, and the winner case pays one claim and refunds 21 across a second step. IssueScout drafts three bounties and rejects one vague issue.
 
 ## Evidence entries
 
-Add each deployed contract address as a separate evidence item. Select **GenLayer Explorer Contract** for every contract row. Do not replace any contract address link with a transaction, repository, or app link.
+Select **GenLayer Explorer Contract** for every contract row.
 
 | Evidence type | Label | URL |
 |---|---|---|
 | GenLayer Explorer Contract | BountyBoard v3 — StudioNet | https://explorer-studio.genlayer.com/address/0x076C7cd3a79b8991Ce3Bc3B005214d13A1e5E4D5 |
 | GenLayer Explorer Contract | PatchJudge v3 — StudioNet | https://explorer-studio.genlayer.com/address/0x739D4947Ecfa7622A79aeBBb91FFA57Ca9dFB898 |
+| GenLayer Explorer Contract | IssueScout — StudioNet | https://explorer-studio.genlayer.com/address/0x613D07c39f4a09e5a657A5B6820238cFd7589a53 |
 | Website | Bounty Bench production app | https://bounty-bench.vercel.app |
 | GitHub repository | Bounty Bench app and contracts | https://github.com/JWattjr/bounty-bench |
 | GitHub repository | Public hunter fixture library | https://github.com/JWattjr/bounty-bench-fixtures |
 
-## Honest limitations
+Logo: `public/logo.png`. Demo video: `docs/demo/bounty-bench-demo.mp4` (upload to YouTube or X for the Demo URL field).
 
-GitHub availability is part of the evidence path, and diffs larger than the 30 KB extracted-evidence cap resolve as insufficient evidence. The claimant trailer makes copying another hunter’s public commit harder but does not establish legal identity or GitHub account ownership. The language model returns only a criterion verdict; code owns the queue, amounts, and transfers. StudioNet and its Explorer are the demo network and record source.
+## Limits
+
+GitHub availability is part of the evidence path, and diffs above 30 KB resolve as insufficient evidence. The claimant trailer is not proof of GitHub account ownership. The model returns only a criterion verdict; code owns the queue, amounts and transfers.

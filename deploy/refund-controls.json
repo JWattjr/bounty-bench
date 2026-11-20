@@ -61,45 +61,14 @@
       ],
       "bountyId": "bounty-7",
       "claims": 21,
-      "pendingBeforeClose": 21
-    },
-    "openBounties": {
-      "name": "openBounties",
-      "items": {
-        "1": {
-          "deadline": 1797009002,
-          "title": "Fix: truncate_words keeps one word too few",
-          "criteria": [
-            "adds a test that exercises `truncate_words` with `truncate_words(\"a b c d\", 3)` expecting \"a b c...\"",
-            "changes `truncate_words` so that `truncate_words(\"a b c d\", 3)` returns \"a b c...\""
-          ],
-          "draftId": "draft-1",
-          "bountyId": "bounty-8",
-          "status": "OPEN"
-        },
-        "2": {
-          "deadline": 1797009155,
-          "title": "Fix: parse_duration ignores everything after the first unit",
-          "criteria": [
-            "changes `parse_duration` so that `parse_duration(\"1h30m\")` returns `5400` seconds",
-            "adds a test that exercises `parse_duration` with `\"1h30m\"` and expected result `5400` seconds"
-          ],
-          "draftId": "draft-2",
-          "bountyId": "bounty-9",
-          "status": "OPEN"
-        },
-        "3": {
-          "deadline": 1797009307,
-          "title": "Fix: title_case capitalizes letters after an apostrophe",
-          "criteria": [
-            "changes `title_case` so that `title_case(\"o'neil's book\")` returns `\"O'neil's Book\"`",
-            "adds a test that exercises `title_case` with `\"o'neil's book\"` and expected result `\"O'neil's Book\"`"
-          ],
-          "draftId": "draft-3",
-          "bountyId": "bounty-10",
-          "status": "OPEN"
-        }
+      "pendingBeforeClose": 21,
+      "afterFirstClose": {
+        "status": "CLOSING",
+        "closeCursor": 20
       },
+      "statusAfter": "CLOSED",
+      "claimsRefunded": 21,
+      "rewardRemainingAfter": "0",
       "done": true
     }
   },
@@ -232,14 +201,30 @@
     "closing-claim-19": "0x82112bee3d35c640557f6b5ddf0f7d92e4fb80592cf8397d18052138120ede47",
     "closing-claim-20": "0x215c9411f0dcd1285522ee23c20bf37ad440e0c48f1e51594ef5552c43dc4696",
     "closing-claim-21": "0x60c3ed3bea0a137996bea39065d3f241f45f7d2359c27b1bd5cf89e5edc3c232",
-    "open-issue-1-create": "0xfdf142991ebed1fb79380b0d4fd8230e6ccaa559f4642544c324e9ad2860800a",
-    "open-issue-1-create-child-0": "0xadac8bc0d707c2614699bc7a3488ef280f76a2cea6d82d04746159a4135fd247",
-    "open-issue-1-create-child-0-child-0": "0xa8549eb8c529e6ef02c769578f80ea3b11d462bc62e76bbecef0dc588eece403",
-    "open-issue-2-create": "0xdc7a25fa768177332dc28845efbb21a41ce5791737f625e88d324e0cae78e0ad",
-    "open-issue-2-create-child-0": "0xe80db9ab2f7f161c6a6a7bd23a89eae8c5127beaebdf786889dcce8431bb2747",
-    "open-issue-2-create-child-0-child-0": "0xa8a20f68d37104a783b1e6b44792d7b06d42487ef354c17f1b583f89a3e9022c",
-    "open-issue-3-create": "0xf3a3f3af700acf82dffa6f8c6575349258c92d21ea4f45485ddf8c8bf7a95cb9",
-    "open-issue-3-create-child-0": "0xa6ac047b03e963f325abb1f6bb256d7c9896082830b22d30806ba74c94bfed91",
-    "open-issue-3-create-child-0-child-0": "0xef97fb8fc062b01be8e8bf25c8bc6399a0e9eb0b0aaa87d5437fb2ab36db8157"
+    "closing-close-1": "0xe3945fe93002cf1d7a71e234005d61dc9159f29c7dbfe5aec4b163bb450ae10f",
+    "closing-close-1-child-0": "0x9f070ebafc9adc7afd2925c905128cc41d4d00387c394889fa4531e24700873d",
+    "closing-close-1-child-1": "0xb545b1f771288cea3f2ebf30649a4f32f454a868715cfa8d91b6e7aa1511942e",
+    "closing-close-1-child-2": "0xdbec96edfb279f647f94d91209cadb2f69c8a8a8338fb4ea49ec38c7d558c287",
+    "closing-close-1-child-3": "0x122e59461057ec89b72b5b2ab5421d5afedd28dde959923e00ba40d958ed1b1f",
+    "closing-close-1-child-4": "0x1eb372a616f2eac25717494e491d067227376c2d50d655529b04c5a8c5f117dc",
+    "closing-close-1-child-5": "0xacf7cef82a98eb3a60130e0f413fd689fc14bc670cd3224076c4f4fe47e11af1",
+    "closing-close-1-child-6": "0xe45d53fa9c76b673c45390938ae59d7e546375596352eafdefb7f0794b7ae43c",
+    "closing-close-1-child-7": "0x017f34613016edaa2a81078d851a26be1ded0a3f91bda4e1a6c44b0101741329",
+    "closing-close-1-child-8": "0x536f31f70a23a2a02974a273721b774fea6b5f16b8a875a662b0ee0ddb99b47e",
+    "closing-close-1-child-9": "0x34d1afcdf433a9a2b1adcc372dee3f997e594d95513fb228d948f109767a2bdf",
+    "closing-close-1-child-10": "0x9edca6112279470deaad4359b69972efd1aa47974519caf04df178164d7ae3c2",
+    "closing-close-1-child-11": "0x612847d012012961795d0a145eae90bda682092cd20eea66e7b4b319254a4d5b",
+    "closing-close-1-child-12": "0xadab16828c416948b919543472b580ef7925b8d34babc3feaf9537aee7f85fa2",
+    "closing-close-1-child-13": "0xfb87bc8f6c21416f239e2cb37689e9542ebed3e35e8d669b08cdcea17c45f56e",
+    "closing-close-1-child-14": "0x18f3be194a1535d1a59f9987d23fe0af5197906164fc80d55fc148d324991776",
+    "closing-close-1-child-15": "0x3d6c885bb77115eddbc8defb15bdcfa1b566e21830af849b5b90e58f00d0968c",
+    "closing-close-1-child-16": "0xc52ea285911914ea20f934b78683be5cedddc7f63503c601d875d02c018f30c1",
+    "closing-close-1-child-17": "0x8696c6331a9699fd8db924a766324f37e27a1af7a9c5e41f58e75fad2b2455b5",
+    "closing-close-1-child-18": "0xd59be55aae1b011cc114f7cd20791febd79f7f0c4e3c2ed3f423fc6fecdac6c8",
+    "closing-close-1-child-19": "0x98fa31697ce3f00d4504644b52ee217c9208330141bd1cfa91057454827ca5ce",
+    "closing-close-2": "0xdf67e1289619f8af75d8cefd9b6a75f18f9288334f818c01f386f3172de60533",
+    "closing-close-2-child-0": "0x9b524fa8b8f30f6c7f6e5a504ad4c893322407eb3a67ac6d5a4197b3a5ad513e",
+    "closing-close-2-child-1": "0x35d5115558aac391bdefd854dda4593086325f3043431ad7d84d13263915d9d6",
+    "closing-close-2-child-1-child-0": "0x7329cee06f9ca6fdcca09280f3db6e637e6756bc31a6975119baa638d72d539f"
   }
 }
