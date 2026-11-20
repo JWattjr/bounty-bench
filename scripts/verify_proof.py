@@ -173,7 +173,7 @@ def verify_refund_controls():
     summary = PROOF.get("refundControls")
     if not summary:
         return
-    from genlayer_py import create_client, studionet
+    from genlayer_py import create_account, create_client, studionet
     from genlayer_py.provider import provider
     from genlayer_py.types import TransactionHashVariant
 
@@ -185,7 +185,7 @@ def verify_refund_controls():
         return original(url, **kwargs)
 
     provider.requests.post = browser_post
-    client = create_client(chain=studionet)
+    client = create_client(chain=studionet, account=create_account())
 
     def read(method, args):
         for attempt in range(MAX_ATTEMPTS):
@@ -233,7 +233,7 @@ def verify_scout():
     scout = PROOF.get("scout")
     if not scout or "IssueScout" not in PROOF.get("contracts", {}):
         return
-    from genlayer_py import create_client, studionet
+    from genlayer_py import create_account, create_client, studionet
     from genlayer_py.provider import provider
     from genlayer_py.types import TransactionHashVariant
 
@@ -245,7 +245,7 @@ def verify_scout():
         return original(url, **kwargs)
 
     provider.requests.post = browser_post
-    client = create_client(chain=studionet)
+    client = create_client(chain=studionet, account=create_account())
     address = PROOF["contracts"]["IssueScout"]["address"]
     for issue, draft_id in scout.get("drafts", {}).items():
         for attempt in range(MAX_ATTEMPTS):
